@@ -35,3 +35,28 @@ will produce a post that looks like this
 > Use a list comprehension:
 >
 >     squares =  [x**2 for x in range(10)]
+
+### `mutable-default-value`: Avoid using mutable objects as default values
+
+Avoid this:
+
+    class Box:
+        def __init__(self, items=[]):
+            self.items = items
+
+Do this instead:
+
+    class Box:
+        def __init__(self, items=None):
+            if items is None:
+                items = []
+            self.items = items
+
+Explanation: Default values are evaluated only once, when the function is
+defined, and stored with the function; calls to the function use those stored
+values. If you use `[]` as the default value, `[]` will be evaluated, producing
+an empty list, and that empty list will be stored. Every call to the function
+will use that same stored list object, so any modifications you make to it (such
+as appending items) will be seen by future function calls. To avoid this, you
+should use a default value of `None` and then construct the default value inside
+of the function.
