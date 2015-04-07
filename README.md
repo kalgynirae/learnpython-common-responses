@@ -35,3 +35,7 @@ will produce a post that looks like this
 > Use a list comprehension:
 >
 >     squares =  [x**2 for x in range(10)]
+
+### `gists`: Third party sites to host longer code blocks
+
+If you have a long snippet of code that you don't already have in a code hosting site (eg [GitHub](https://github.com) or [Bitbucket](https://bitbucket.org/)) and that looks too unwieldy for an inline code block, consider creating a [gist](https://gist.github.com/) (requires a (free) GitHub account) or using [Pastebin](http://pastebin.com/).
