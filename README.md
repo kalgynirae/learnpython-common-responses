@@ -52,7 +52,7 @@ class Box:
 Do this instead:
 
 ```
-class Box:
+class CorrectBox:
     def __init__(self, items=None):
         if items is None:
             items = []
@@ -60,3 +60,47 @@ class Box:
 ```
 
 Explanation: Default values are evaluated only once, when the function is defined, and stored with the function; calls to the function use those stored values. If you use `[]` as the default value, `[]` will be evaluated, producing an empty list, and that empty list will be stored. Every call to the function will use that same stored list object, so any modifications you make to it (such as appending items) will be seen by future function calls. To avoid this, you should use a default value of `None` and then construct the default value inside of the function.
+
+To illustrate, let's enter in the `Box` class above, create two boxes, and see what happens when we append things to the `items` attribute of one of the boxes:
+
+```
+In [1]: class Box:
+   ...:     def __init__(self, items=[]):
+   ...:         self.items = items
+   ...:
+
+In [2]: b1 = Box()
+
+In [3]: b2 = Box()
+
+In [4]: b1.items.append("stuff")
+
+In [5]: b1.items # Should be a single list with "stuff" in it.
+Out[5]: ['stuff']
+
+In [6]: b2.items # You'd think this would be empty, but nope!
+Out[6]: ['stuff']
+```
+
+And in contrast:
+
+```
+In [7]: class CorrectBox:
+   ...:     def __init__(self, items=None):
+   ...:         if items is None:
+   ...:             items = []
+   ...:         self.items = items
+   ...:
+
+In [8]: cb1 = CorrectBox()
+
+In [9]: cb2 = CorrectBox()
+
+In [10]: cb1.items.append("blarg")
+
+In [11]: cb1.items
+Out[11]: ['blarg']
+
+In [12]: cb2.items
+Out[12]: []
+```
